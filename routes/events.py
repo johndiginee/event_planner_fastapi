@@ -26,7 +26,7 @@ async def retrieve_event(id: int) -> Event:
     )
 
 
-@event_router.post("/new/")
+@event_router.post("/new")
 async def create_event(body: Event = Body(...)) -> dict:
     events.append(body)
     return {
