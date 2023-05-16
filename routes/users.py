@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException, status
-from models.user import User, UserSignIn
+from models.users import User, UserSignIn
 
 user_router = APIRouter(
     tags=["User"]
@@ -8,7 +8,7 @@ user_router = APIRouter(
 users = {}
 
 @user_router.post("/signup")
-async def sign_new_user(data: NewUser) -> dict:
+async def sign_new_user(data: User) -> dict:
     if data.email in users:
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
@@ -19,9 +19,9 @@ async def sign_new_user(data: NewUser) -> dict:
         "message": "User successfully registered!"
     }
 
-@user_router.post("/signup")
+@user_router.post("/signin")
 async def sign_new_in(user: UserSignIn) -> dict:
-    if users[user.email] not in users:
+    if user.email not in users:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="User does not exist"
