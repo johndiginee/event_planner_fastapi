@@ -1,9 +1,8 @@
-from sqlmodel import JSON, SQLModel, Field, Column
+from beanie import Document
 from typing import Optional, List
+from pydantic import BaseModel, EmailStr
 
-
-class Event(SQLModel, table=True):
-    id: int = Field(default=None, primary_key=True)
+class Event(Document):
     title: str
     image: str
     description: str
@@ -14,7 +13,6 @@ class Event(SQLModel, table=True):
         arbitrary_types_allowed = True
         schema_extra = {
             "example": {
-                "id": 1,
                 "title": "FastAPI Book Launch",
                 "image": "https://linktomyimage.com/image.png",
                 "description": "We will be discussing the contents of the FastAPI book in this event. Ensure to come with your own copy to win gifts!",
@@ -22,8 +20,10 @@ class Event(SQLModel, table=True):
                 "location": "Google Meet"
             }
         }
+    class Settings:
+        name = "events"
 
-class EventUpdate(SQLModel):
+class EventUpdate(BaseModel):
     title: Optional[str]
     image: Optional[str]
     description: Optional[str]
@@ -33,7 +33,6 @@ class EventUpdate(SQLModel):
     class Config:
         schema_extra = {
             "example": {
-                "id": 1,
                 "title": "FastAPI Book Launch",
                 "image": "https://linktomyimage.com/image.png",
                 "description": "We will be discussing the contents of the FastAPI book in this event. Ensure to come with your own copy to win gifts!",

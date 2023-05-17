@@ -1,8 +1,9 @@
 from pydantic import BaseModel, EmailStr
 from typing import List, Optional
 from models.events import Event
+from beanie import Document, Link
 
-class User(BaseModel):
+class User(Document):
     email: EmailStr
     password: str
     events: Optional[List[Event]]
