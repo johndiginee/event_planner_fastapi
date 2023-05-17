@@ -12,7 +12,7 @@ events = []
 
 
 @event_router.get("/", response_model=List[Event])
-async def retrieve_all_events(session=Depends(get_session)) -> List[Event]:
+async def retrieve_all_events(session=Depends(get_session)):
     statement = select(Event)
     events = session.exec(statement).all()
     return events
